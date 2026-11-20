@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c1016" />
+  <title>Aetherfall Chronicles — Open World MMORPG</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔</text></svg>" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+
+  <!-- ============ TITLE SCREEN ============ -->
+  <div id="title-screen">
+    <div class="title-shade"></div>
+    <div class="title-inner">
+      <div class="title-left">
+        <div class="title-eyebrow"><span></span> AN OPEN-WORLD CHRONICLE <span></span></div>
+        <h1 class="game-title">Aetherfall<br><em>Chronicles</em></h1>
+        <p class="title-sub">Four wards are failing. The Heart is waking.<br>Five endings wait beyond the last choice.</p>
+        <div class="title-actions">
+          <button id="btn-continue" class="btn btn-primary hidden">Continue Chronicle</button>
+          <button id="btn-new" class="btn btn-primary">Begin a New Journey</button>
+          <button id="btn-title-help" class="btn btn-ghost">How to Play</button>
+        </div>
+        <div class="title-meta">
+          <div><b>5,000 × 5,000</b><span>open world</span></div>
+          <div><b>4</b><span>biomes</span></div>
+          <div><b>6</b><span>classes</span></div>
+          <div><b>5</b><span>endings</span></div>
+        </div>
+      </div>
+
+      <div class="title-right">
+        <div class="class-select-head">
+          <h2>Choose Your Path</h2>
+          <p>Six callings. Each answers the Aetherheart differently.</p>
+        </div>
+        <div id="class-grid" class="class-grid"></div>
+        <div class="class-select-foot">
+          <div id="class-detail" class="class-detail"></div>
+          <button id="btn-embark" class="btn btn-primary btn-embark" disabled>Embark</button>
+        </div>
+      </div>
+    </div>
+    <div class="title-footer">
+      <span>Drag to look · WASD to move · J to strike · E to speak</span>
+      <button id="btn-title-sound" class="sound-toggle" aria-label="Toggle sound">♪ Sound On</button>
+    </div>
+  </div>
+
+  <!-- ============ HUD ============ -->
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <div class="player-panel">
+        <div class="portrait"><span id="portrait-icon">⚔</span><i id="portrait-ring"></i></div>
+        <div class="player-info">
+          <div class="player-name-row"><span id="player-name">Wanderer</span><em id="player-job">Swordsman</em></div>
+          <div class="level-row"><span id="player-level">Lv 1</span><div class="bar xp"><i id="xp-fill"></i></div><span id="xp-text" class="tiny">0 / 40</span></div>
+          <div class="bar hp"><i id="hp-fill"></i><b id="hp-text">190 / 190</b></div>
+          <div class="bar mp"><i id="mp-fill"></i><b id="mp-text">60 / 60</b></div>
+          <div class="currency-row"><span><b>◉</b> <i id="gold-text">0</i></span><span><b>✦</b> <i id="token-text">0</i></span></div>
+        </div>
+      </div>
+
+      <div id="quest-tracker" class="quest-tracker">
+        <div class="qt-label">MAIN QUEST</div>
+        <div class="qt-title" id="main-quest-title">A Blade and a Vow</div>
+        <div class="qt-obj" id="main-quest-obj">Speak with Elder Maren.</div>
+        <div id="side-quest-list" class="side-quests"></div>
+      </div>
+
+      <div class="hud-right">
+        <div class="minimap-wrap">
+          <canvas id="minimap" width="360" height="360"></canvas>
+          <div class="minimap-ring"></div>
+          <div class="zone-chip" id="zone-chip">Wayfarer's Rest</div>
+          <div class="compass">N</div>
+        </div>
+        <div class="hud-buttons">
+          <button class="hud-btn" data-menu="map" title="World Map (M)"><span>⌘</span><em>Map</em></button>
+          <button class="hud-btn" data-menu="journal" title="Journal (Q)"><span>❧</span><em>Journal</em></button>
+          <button class="hud-btn" data-menu="inventory" title="Inventory (I)"><span>◫</span><em>Bag</em></button>
+          <button class="hud-btn" data-menu="gacha" title="Astral Loom (G)"><span>✧</span><em>Loom</em></button>
+          <button class="hud-btn" data-menu="help" title="Help (?)"><span>?</span><em>Help</em></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="location-banner" class="location-banner"><span id="location-name"></span><em id="location-sub"></em></div>
+
+    <div id="boss-bar" class="boss-bar hidden">
+      <div class="boss-name"><span id="boss-name-text">The Ashen Sovereign</span><em id="boss-level">Lv 25 · World Boss</em></div>
+      <div class="bar boss"><i id="boss-fill"></i></div>
+    </div>
+
+    <div id="log-feed" class="log-feed"></div>
+
+    <div class="hud-bottom">
+      <div id="joystick" class="joystick"><div class="joy-base"><div id="joy-knob" class="joy-knob"></div></div></div>
+
+      <div class="action-dock">
+        <div id="interact-prompt" class="interact-prompt hidden"><b>E</b><span id="interact-text">Speak</span></div>
+        <div class="skillbar">
+          <button class="skill-btn" data-skill="0"><span class="skill-key">1</span><span class="skill-icon" id="skill-icon-0">🌀</span><span class="skill-cd" id="skill-cd-0"></span><em id="skill-name-0">Whirlwind</em></button>
+          <button class="skill-btn" data-skill="1"><span class="skill-key">2</span><span class="skill-icon" id="skill-icon-1">🛡</span><span class="skill-cd" id="skill-cd-1"></span><em id="skill-name-1">Iron Guard</em></button>
+          <button class="skill-btn" data-skill="2"><span class="skill-key">3</span><span class="skill-icon" id="skill-icon-2">✹</span><span class="skill-cd" id="skill-cd-2"></span><em id="skill-name-2">Blade Storm</em></button>
+          <button id="btn-potion" class="skill-btn potion-btn"><span class="skill-key">H</span><span class="skill-icon">🧪</span><em>Potion</em><span id="potion-count" class="potion-count">0</span></button>
+          <button id="btn-attack" class="attack-btn"><span id="attack-icon">⚔</span><em>Strike</em></button>
+        </div>
+      </div>
+
+      <div class="touch-extra">
+        <button id="btn-jump" class="round-btn" title="Jump">⤒</button>
+        <button id="btn-menu-mobile" class="round-btn" title="Menu">☰</button>
+      </div>
+    </div>
+
+    <div id="tutorial-tip" class="tutorial-tip hidden">
+      <div class="tip-gem">✦</div>
+      <div><b id="tip-title">Move</b><span id="tip-text">Use WASD or the joystick to walk.</span></div>
+    </div>
+
+    <div id="toasts" class="toasts"></div>
+    <div id="labels" class="labels"></div>
+    <div id="floaters" class="floaters"></div>
+    <div id="damage-flash" class="damage-flash"></div>
+    <div id="zone-fade" class="zone-fade"></div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="loading" class="loading">
+    <div class="loading-emblem">✦</div>
+    <div class="loading-title">Aetherfall Chronicles</div>
+    <div class="loading-bar"><i id="loading-fill"></i></div>
+    <div class="loading-text" id="loading-text">Weaving the world…</div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
