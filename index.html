@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#071116" />
+  <link rel="icon" href="data:," />
+  <title>OUTSIDE // A City of Quiet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-shell">
+    <canvas id="game"></canvas>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">O</span><span>OUTSIDE</span><i>FIELD SYSTEMS / 09</i></div>
+      <div class="top-status"><span class="live-dot"></span> CIVIC GRID <b>OFFLINE</b><span class="divider"></span><span id="clock">06:14</span></div>
+    </header>
+
+    <section class="mission-card" id="mission-card" aria-live="polite">
+      <div class="eyebrow"><span class="eyebrow-line"></span> ACTIVE DIRECTIVE <span id="step-count">01 / 06</span></div>
+      <h1 id="mission-title">Find the Archive</h1>
+      <p id="mission-desc">The old transit archive sits beneath the eastern overpass. Find a way inside.</p>
+      <div class="objective-row"><span class="objective-icon">⌖</span><span id="objective-text">Reach the Archive entrance</span><span class="objective-distance" id="objective-distance">—</span></div>
+      <div class="progress-track"><span id="mission-progress"></span></div>
+    </section>
+
+    <aside class="location-card"><span class="loc-symbol">⌖</span><div><small>CURRENT SECTOR</small><strong id="location-name">THE LOW QUARTER</strong></div><span class="signal-bars"><i></i><i></i><i></i><i></i></span></aside>
+
+    <div class="compass" id="compass"><span>N</span><i></i><b>—</b></div>
+    <div class="interact-hint" id="interact-hint"><span class="keycap">E</span><span>INTERACT</span></div>
+
+    <div class="toast" id="toast"><span class="toast-icon">✳</span><span id="toast-text">Signal acquired</span></div>
+    <div class="subtitle" id="subtitle"></div>
+
+    <div class="map-panel" id="map-panel">
+      <div class="map-head"><span>FIELD MAP</span><span>SECTOR 09</span></div>
+      <canvas id="minimap" width="180" height="180"></canvas>
+      <div class="map-legend"><i class="legend-player"></i> YOU <i class="legend-goal"></i> OBJECTIVE</div>
+    </div>
+
+    <div class="bottom-left"><span class="weather-icon">☁</span><div><b>ASHFALL</b><small>WIND FROM THE WEST · 4°</small></div><span class="bottom-divider"></span><div><b id="fragment-count">0 / 3</b><small>MEMORY FRAGMENTS</small></div></div>
+    <div class="controls-note"><span>WASD</span> MOVE <span class="control-sep">·</span> <span>MOUSE</span> LOOK <span class="control-sep">·</span> <span>SHIFT</span> RUN <span class="control-sep">·</span> <span>E</span> INTERACT <button id="help-button">?</button></div>
+
+    <div class="touch-controls" id="touch-controls">
+      <div class="dpad"><button data-move="forward">▲</button><div><button data-move="left">◀</button><button data-move="back">▼</button><button data-move="right">▶</button></div></div>
+      <div class="touch-actions"><button id="run-touch">RUN</button><button id="interact-touch">USE</button></div>
+      <div class="look-zone" id="look-zone">DRAG TO LOOK</div>
+    </div>
+
+    <div class="modal-screen" id="start-screen">
+      <div class="intro-grid">
+        <div class="intro-copy">
+          <div class="intro-kicker"><span></span> A SMALL OPEN-WORLD ADVENTURE</div>
+          <div class="intro-title">THE CITY<br><em>FORGOT</em><br>THE SKY.</div>
+          <p class="intro-desc">A place that keeps everyone safe can still become a cage. Find the signal, cross the perimeter, and see what the city has been hiding.</p>
+          <button class="primary-button" id="start-button"><span>BEGIN YOUR JOURNEY</span><b>↗</b></button>
+          <div class="intro-foot">A STORY ABOUT THE WAY OUT <span>—</span> 20–30 MIN</div>
+        </div>
+        <div class="intro-art">
+          <div class="sun-orb"></div><div class="art-grid"></div><div class="art-building b1"></div><div class="art-building b2"></div><div class="art-building b3"></div><div class="art-building b4"></div><div class="art-wall"></div><div class="art-person"></div><div class="art-coordinates">09° / 41°<br>NO RETURN ZONE</div>
+          <div class="art-caption">“THERE IS A WORLD<br>BEYOND THE WALL.”</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-screen hidden" id="puzzle-screen">
+      <div class="puzzle-card">
+        <button class="close-modal" id="puzzle-close">×</button>
+        <div class="eyebrow"><span class="eyebrow-line"></span> LOCAL ACCESS TERMINAL</div>
+        <h2 id="puzzle-title">TUNE THE RELAY</h2>
+        <p id="puzzle-clue">Three tones. One remembered sequence.</p>
+        <div class="tone-row" id="tone-row"></div>
+        <div class="puzzle-feedback" id="puzzle-feedback">Use the clue. Set the three tones in order.</div>
+        <button class="primary-button puzzle-submit" id="puzzle-submit"><span>SUBMIT SEQUENCE</span><b>↗</b></button>
+        <div class="puzzle-foot">HINTS ARE LEFT IN THE WORLD. LOOK AROUND.</div>
+      </div>
+    </div>
+
+    <div class="modal-screen hidden" id="ending-screen">
+      <div class="ending-card">
+        <div class="ending-kicker">OUTSIDE // SIGNAL FOUND</div>
+        <h2>THE SKY<br><em>IS REAL.</em></h2>
+        <p>You step through the gate. The air is clean, the horizon endless. Behind you, the city dims. Ahead, a river shines through green hills—and for the first time, no voice tells you where to go.</p>
+        <div class="ending-stats"><span>THE LOW QUARTER <b>LEFT BEHIND</b></span><span>YOUR NEXT CHAPTER <b>UNWRITTEN</b></span></div>
+        <button class="primary-button" id="restart-button"><span>WALK THE CITY AGAIN</span><b>↗</b></button>
+      </div>
+    </div>
+
+    <div class="modal-screen hidden" id="help-screen">
+      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · Move your mouse to look around · <b>E</b> to interact. On touch screens, use the on-screen controls and drag to look.</p><p>Follow the directive in the upper left. Find clues in the world, solve the relay terminals, and bring the systems back online. Your map marks your next destination.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
+    </div>
+
+    <div class="fade-screen" id="fade-screen"></div>
+  </div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
