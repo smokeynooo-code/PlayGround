@@ -1,8 +1,8 @@
 export default {
   server: {
-    allowedHosts: ['live-44669631717-1.omgithub.com'],
+    allowedHosts: ['live-44699198552-1.omgithub.com'],
   },
   preview: {
-    allowedHosts: ['live-44669631717-1.omgithub.com'],
+    allowedHosts: ['live-44699198552-1.omgithub.com'],
   },
 };

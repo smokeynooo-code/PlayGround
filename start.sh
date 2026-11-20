@@ -8,7 +8,8 @@ START_MS=$(date +%s%3N)
 trap 'END_MS=$(date +%s%3N); printf "[timing] start.sh total: %s ms\n" "$((END_MS-START_MS))"' EXIT
 
 PORT_VALUE="${PORT:-3000}"
-mkdir -p /home/runner/work/_temp/omgithub-web
+METADATA_DIR="${OPENCODE_WEB_DIR:-/home/runner/work/_temp/omgithub-web}"
+mkdir -p "$METADATA_DIR"
 mkdir -p "$PROJECT_DIR/dist"
 
 printf '[timing] npm: start\n'
@@ -31,7 +32,7 @@ if [[ ! -f "$PROJECT_DIR/dist/index.html" ]]; then
 fi
 
 printf '{"project":"%s","directory":"%s"}\n' "$PROJECT_DIR" "$PROJECT_DIR/dist" \
-  > /home/runner/work/_temp/omgithub-web/deployment-output.json
+  > "$METADATA_DIR/deployment-output.json"
 
 printf '[timing] serve: start\n'
 SERVE_START_MS=$(date +%s%3N)
