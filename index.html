@@ -22,12 +22,18 @@
       <div class="top-status"><span class="live-dot"></span> CIVIC GRID <b>OFFLINE</b><span class="divider"></span><span id="clock">06:14</span></div>
     </header>
 
-    <section class="mission-card" id="mission-card" aria-live="polite">
-      <div class="eyebrow"><span class="eyebrow-line"></span> ACTIVE DIRECTIVE <span id="step-count">01 / 06</span></div>
-      <h1 id="mission-title">Find the Archive</h1>
-      <p id="mission-desc">The old transit archive sits beneath the eastern overpass. Find a way inside.</p>
-      <div class="objective-row"><span class="objective-icon">⌖</span><span id="objective-text">Reach the Archive entrance</span><span class="objective-distance" id="objective-distance">—</span></div>
-      <div class="progress-track"><span id="mission-progress"></span></div>
+    <section class="mission-card collapsed" id="mission-card" aria-live="polite">
+      <div class="mission-head">
+        <div class="mission-direction" aria-hidden="true"><span id="mission-arrow">↑</span></div>
+        <div class="mission-main">
+          <div class="eyebrow"><span class="eyebrow-line"></span> ACTIVE DIRECTIVE <span id="step-count">01 / 06</span></div>
+          <h1 id="mission-title">Find the Archive</h1>
+          <p id="mission-desc" class="mission-desc">The old transit archive sits beneath the eastern overpass. Find a way inside.</p>
+          <div class="objective-row"><span class="objective-icon">⌖</span><span id="objective-text">Reach the Archive entrance</span><span class="objective-distance" id="objective-distance">—</span></div>
+          <div class="progress-track"><span id="mission-progress"></span></div>
+        </div>
+        <button class="mission-toggle" id="mission-toggle" aria-label="Minimize mission directive" aria-expanded="false" title="Expand directive (M)">＋</button>
+      </div>
     </section>
 
     <aside class="location-card"><span class="loc-symbol">⌖</span><div><small>CURRENT SECTOR</small><strong id="location-name">THE LOW QUARTER</strong></div><span class="signal-bars"><i></i><i></i><i></i><i></i></span></aside>
@@ -37,6 +43,16 @@
 
     <div class="toast" id="toast"><span class="toast-icon">✳</span><span id="toast-text">Signal acquired</span></div>
     <div class="subtitle" id="subtitle"></div>
+
+    <div class="dialogue-screen hidden" id="dialogue-screen" role="dialog" aria-live="polite">
+      <div class="dialogue-card">
+        <button class="dialogue-close" id="dialogue-close" aria-label="End conversation">×</button>
+        <div class="dialogue-meta"><span id="dialogue-role">CITIZEN</span><span id="dialogue-progress">01 / 03</span></div>
+        <h3 id="dialogue-name">MARA</h3>
+        <p id="dialogue-text"></p>
+        <div class="dialogue-foot"><span>FIELD TESTIMONY // RECORDED</span><button class="dialogue-next" id="dialogue-next"><span>KEEP LISTENING</span><b>↗</b></button></div>
+      </div>
+    </div>
 
     <div class="map-panel" id="map-panel">
       <div class="map-head"><span>FIELD MAP</span><span>SECTOR 09</span></div>
@@ -93,7 +109,7 @@
     </div>
 
     <div class="modal-screen hidden" id="help-screen">
-      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · Move your mouse to look around · <b>E</b> to interact. On touch screens, use the on-screen controls and drag to look.</p><p>Follow the directive in the upper left. Find clues in the world, solve the relay terminals, and bring the systems back online. Your map marks your next destination.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
+      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · Move your mouse to look around · <b>E</b> to interact. On touch screens, use the on-screen controls and drag to look.</p><p>Buildings are solid. Follow the neon and enter through lit doorways—interiors hold terminals and people with stories. The small <b>＋</b> on the directive (or <b>M</b>) collapses it when you need more sky. Press <b>ESC</b> to release the mouse and use the interface.</p><p>Follow the arrow in the mission card. Find clues in the world, solve the terminals, and bring the relay network back online. Your map marks the next destination.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
     </div>
 
     <div class="fade-screen" id="fade-screen"></div>
