@@ -138,8 +138,16 @@ export function createCharacter(opts = {}) {
   const job = JOBS[jobId] || JOBS.swordsman;
   const npc = !!opts.npc;
 
-  const skin = opts.skin || '#e8b98f';
-  const hairCol = opts.hair || (jobId === 'priest' ? '#e8dfc0' : jobId === 'mage' ? '#d8e8ff' : '#4a3426');
+  const appearance = opts.appearance || {};
+  const skin = opts.skin || appearance.skin || '#e8b98f';
+  const hairCol = opts.hair || appearance.hair || (jobId === 'priest' ? '#e8dfc0' : jobId === 'mage' ? '#d8e8ff' : '#4a3426');
+  const eyeCol = opts.eyes || appearance.eyes || '#221a14';
+  const build = appearance.build || 'average';
+  const height = Number.isFinite(appearance.height) ? appearance.height : 1;
+  const gender = appearance.gender || 'androgynous';
+  const species = appearance.species || 'human';
+  const buildWidth = build === 'slim' ? 0.84 : build === 'broad' ? 1.18 : 1;
+  const buildChest = build === 'slim' ? 0.88 : build === 'broad' ? 1.16 : 1;
   const bodyCol = opts.color || job.color;
   const trimCol = opts.accent || job.accent;
   const dark = '#2b2622';
@@ -149,10 +157,10 @@ export function createCharacter(opts = {}) {
   root.add(hips);
 
   // legs
-  const legL = limb(0.78, 0.19, '#3d3a3a');
-  legL.position.set(-0.15, 0.82, 0);
-  const legR = limb(0.78, 0.19, '#3d3a3a');
-  legR.position.set(0.15, 0.82, 0);
+  const legL = limb(0.78 * (gender === 'female' ? 0.96 : 1), 0.19 * buildWidth, '#3d3a3a');
+  legL.position.set(-0.15 * buildWidth, 0.82, 0);
+  const legR = limb(0.78 * (gender === 'female' ? 0.96 : 1), 0.19 * buildWidth, '#3d3a3a');
+  legR.position.set(0.15 * buildWidth, 0.82, 0);
   for (const leg of [legL, legR]) {
     const boot = box(0.22, 0.2, 0.32, dark, { y: -0.78, z: 0.04 });
     leg.add(boot);
@@ -163,7 +171,10 @@ export function createCharacter(opts = {}) {
   torso.position.y = 0.82;
   hips.add(torso);
 
-  const chest = box(0.52, 0.62, 0.32, bodyCol, { y: 0.33, roughness: 0.7 });
+  const chest = box(0.52 * buildChest, 0.62, 0.32 * buildWidth, bodyCol, { y: 0.33, roughness: 0.7 });
+  chest.scale.x *= buildWidth;
+  if (species === 'nonhuman') chest.scale.set(chest.scale.x * 1.08, chest.scale.y, chest.scale.z * 1.08);
+  if (species === 'humanoid') chest.scale.set(chest.scale.x * 1.04, chest.scale.y * 1.04, chest.scale.z);
   torso.add(chest);
   torso.add(box(0.55, 0.1, 0.35, trimCol, { y: 0.02 })); // belt
   torso.add(box(0.12, 0.62, 0.34, trimCol, { y: 0.33, z: 0.005, opacity: 0.9 })); // tabard stripe
@@ -190,6 +201,11 @@ export function createCharacter(opts = {}) {
   head.position.y = 0.82;
   torso.add(head);
   const skull = sphere(0.25, skin, { y: 0.02, seg: 10, seg2: 8 });
+  if (species === 'humanoid') {
+    skull.scale.set(1.08, 1.14, 0.92);
+  } else if (species === 'nonhuman') {
+    skull.scale.set(1.18, 0.9, 1.12);
+  }
   head.add(skull);
   head.add(box(0.18, 0.1, 0.04, skin, { y: -0.05, z: 0.23 })); // nose-ish jaw
   // hair cap
@@ -197,11 +213,31 @@ export function createCharacter(opts = {}) {
   hair.scale.set(1, 0.8, 1);
   head.add(hair);
   // eyes
-  const eyeMat = new THREE.MeshBasicMaterial({ color: '#221a14' });
+  const eyeMat = new THREE.MeshBasicMaterial({ color: eyeCol });
   for (const s of [-1, 1]) {
-    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.032, 6, 5), eyeMat);
-    eye.position.set(s * 0.09, 0.02, 0.225);
+    const eyeSize = species === 'nonhuman' ? 0.043 : species === 'humanoid' ? 0.037 : 0.032;
+    const eye = new THREE.Mesh(new THREE.SphereGeometry(eyeSize, 6, 5), eyeMat);
+    eye.position.set(s * (species === 'humanoid' ? 0.105 : 0.09), 0.02, 0.225);
+    eye.scale.y = species === 'nonhuman' ? 0.72 : 1;
     head.add(eye);
+  }
+
+  if (species === 'humanoid') {
+    for (const s of [-1, 1]) {
+      const ear = sphere(0.07, skin, { x: s * 0.27, y: 0.03, z: -0.01, seg: 7, seg2: 5 });
+      ear.scale.set(0.45, 1.15, 0.7);
+      head.add(ear);
+    }
+  } else if (species === 'nonhuman') {
+    for (const s of [-1, 1]) {
+      const brow = box(0.12, 0.035, 0.055, skin, { x: s * 0.1, y: 0.11, z: 0.205 });
+      brow.rotation.z = s * -0.18;
+      head.add(brow);
+      const horn = cone(0.045, 0.28, '#d8cfad', { x: s * 0.18, y: 0.31, z: -0.02, seg: 7 });
+      horn.rotation.z = s * -0.45;
+      horn.rotation.x = -0.12;
+      head.add(horn);
+    }
   }
   // cape
   const capePivot = new THREE.Group();
@@ -276,6 +312,8 @@ export function createCharacter(opts = {}) {
   const weaponGroup = new THREE.Group();
   weaponGroup.position.set(0, -0.62, 0.02);
   armR.add(weaponGroup);
+
+  root.scale.setScalar(height);
 
   const state = {
     jobId,

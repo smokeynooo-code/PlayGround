@@ -31,6 +31,7 @@ export function newState(jobId) {
     hp: job.hp, mp: job.mp, maxHp: job.hp, maxMp: job.mp, atk: job.atk, def: job.def,
     weapon: null, armor: null, inventory: [],
     cosmetics: { owned: [], equipped: {} },
+    appearance: { gender: 'androgynous', skin: '#e8b98f', hair: '#4a3426', eyes: '#221a14', build: 'average', height: 1 },
     sigils: [], stage: 0,
     flags: { unity: 0, insight: 0, greed: 0, bossDefeated: false, endingChosen: false },
     tutorial: { step: 0, done: false, traveled: 0, rotated: 0, kills: 0 },
@@ -184,6 +185,14 @@ export class Game {
 
   beginNew() {
     this.state = newState(this.selectedJob);
+    this.state.appearance = {
+      gender: $('appearance-gender')?.value || 'androgynous',
+      build: $('appearance-build')?.value || 'average',
+      height: Number($('appearance-height')?.value || 1),
+      skin: $('appearance-skin')?.value || '#e8b98f',
+      hair: $('appearance-hair')?.value || '#4a3426',
+      eyes: $('appearance-eyes')?.value || '#221a14',
+    };
     const job = JOBS[this.selectedJob];
     this.state.inventory.push({ ...POTIONS.health, qty: 2 }, { ...POTIONS.mana, qty: 1 });
     this.startPlaying(false);
@@ -200,6 +209,7 @@ export class Game {
       tutorial: { ...base.tutorial, ...(s.tutorial || {}) },
       quests: { ...base.quests, ...(s.quests || {}) },
       cosmetics: { ...base.cosmetics, ...(s.cosmetics || {}) },
+      appearance: { ...base.appearance, ...(s.appearance || {}) },
       stats: { ...base.stats, ...(s.stats || {}) },
       lootCounts: s.lootCounts || {},
       pos: s.pos || base.pos,
@@ -249,7 +259,7 @@ export class Game {
 
   spawnPlayer() {
     if (this.playerMesh) this.scene.remove(this.playerMesh);
-    this.playerMesh = createCharacter({ job: this.state.job });
+    this.playerMesh = createCharacter({ job: this.state.job, appearance: this.state.appearance || {} });
     this.scene.add(this.playerMesh);
     this.playerMesh.position.set(this.state.pos.x, this.ground(this.state.pos.x, this.state.pos.z), this.state.pos.z);
     this.playerMesh.rotation.y = this.state.rotation || Math.PI;
@@ -347,22 +357,29 @@ export class Game {
     let id = null;
     const reset = () => { this.joy.x = 0; this.joy.z = 0; knob.style.transform = 'translate(-50%, -50%)'; };
     base.addEventListener('pointerdown', (e) => {
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       id = e.pointerId; base.setPointerCapture(id); this.audio.init();
+      update(e);
     });
-    base.addEventListener('pointermove', (e) => {
+    const update = (e) => {
       if (e.pointerId !== id) return;
-      const r = base.getBoundingClientRect();
-      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      let dx = (e.clientX - cx) / (r.width * 0.36), dy = (e.clientY - cy) / (r.height * 0.36);
+      const baseRect = base.querySelector('.joy-base').getBoundingClientRect();
+      const cx = baseRect.left + baseRect.width / 2, cy = baseRect.top + baseRect.height / 2;
+      const radius = baseRect.width * 0.36;
+      let dx = (e.clientX - cx) / radius, dy = (e.clientY - cy) / radius;
       const len = Math.hypot(dx, dy);
       if (len > 1) { dx /= len; dy /= len; }
-      this.joy.x = dx; this.joy.z = dy;
-      knob.style.transform = `translate(calc(-50% + ${dx * r.width * 0.3}px), calc(-50% + ${dy * r.height * 0.3}px))`;
-    });
+      this.joy.x = dx;
+      // Pointer-down is forward in screen space, so invert dy for forward joystick input.
+      // Keep screen-space vertical input: updatePlayer negates z so an upward drag moves forward.
+      this.joy.z = dy;
+      knob.style.transform = `translate(calc(-50% + ${dx * radius}px), calc(-50% + ${dy * radius}px))`;
+    };
+    base.addEventListener('pointermove', update);
     const up = (e) => { if (e.pointerId === id) { id = null; reset(); } };
     base.addEventListener('pointerup', up);
     base.addEventListener('pointercancel', up);
+    base.addEventListener('lostpointercapture', up);
   }
 
   bindUI() {
@@ -553,7 +570,14 @@ export class Game {
     for (const sp of this.world.npcSpawns) {
       const def = NPCS[sp.npc];
       if (!def) continue;
-      const mesh = createCharacter({ job: NPC_JOB[def.id] || 'priest', npc: true, color: def.color, accent: def.accent, hat: def.hat, staff: def.staff, hair: '#3a2e28' });
+      const skinChoices = ['#f2d0b5', '#d99b72', '#a96f50', '#70432f', '#5d7b70', '#7b5a8f'];
+      const hairChoices = ['#241c18', '#4a3426', '#76634f', '#b7a36f', '#c9d0de', '#5d3558'];
+      const eyeChoices = ['#221a14', '#3d6880', '#6f8c52', '#6a3a20', '#c6b18a'];
+      const species = Math.random() < 0.22 ? 'nonhuman' : Math.random() < 0.42 ? 'humanoid' : 'human';
+      const appearance = species === 'human'
+        ? { gender: ['female', 'male', 'androgynous'][Math.floor(Math.random() * 3)], build: ['slim', 'average', 'broad'][Math.floor(Math.random() * 3)], height: 0.92 + Math.random() * 0.16, skin: skinChoices[Math.floor(Math.random() * 5)], hair: hairChoices[Math.floor(Math.random() * hairChoices.length)], eyes: eyeChoices[Math.floor(Math.random() * eyeChoices.length)] }
+        : { gender: ['androgynous', 'nonbinary'][Math.floor(Math.random() * 2)], build: ['slim', 'average', 'broad'][Math.floor(Math.random() * 3)], height: 0.9 + Math.random() * 0.28, skin: species === 'humanoid' ? ['#b9d8b2', '#b0c7df', '#d4b0d9', '#d8b28a'][Math.floor(Math.random() * 4)] : skinChoices[3 + Math.floor(Math.random() * 3)], hair: hairChoices[Math.floor(Math.random() * hairChoices.length)], eyes: species === 'nonhuman' ? ['#ffcf55', '#78e3d2', '#ef7fae'][Math.floor(Math.random() * 3)] : eyeChoices[Math.floor(Math.random() * eyeChoices.length)], species };
+      const mesh = createCharacter({ job: NPC_JOB[def.id] || 'priest', npc: true, color: def.color, accent: def.accent, hat: def.hat, staff: def.staff, hair: appearance.hair, skin: appearance.skin, eyes: appearance.eyes, appearance });
       const y = this.ground(sp.x, sp.z);
       mesh.position.set(sp.x, y, sp.z);
       mesh.rotation.y = sp.rot || 0;
