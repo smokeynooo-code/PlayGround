@@ -19,7 +19,7 @@
 
     <header class="topbar">
       <div class="brand"><span class="brand-mark">O</span><span>OUTSIDE</span><i>FIELD SYSTEMS / 09</i></div>
-      <div class="top-status"><span class="live-dot"></span> CIVIC GRID <b>OFFLINE</b><span class="divider"></span><span id="clock">06:14</span></div>
+      <div class="top-status"><span class="live-dot"></span> CIVIC GRID <b>OFFLINE</b><span class="divider"></span><span id="clock">06:14</span><button class="audio-toggle" id="audio-toggle" aria-pressed="true" title="Toggle city sound (K)">SOUND ON</button></div>
     </header>
 
     <section class="mission-card collapsed" id="mission-card" aria-live="polite">
@@ -63,7 +63,7 @@
     </div>
 
     <div class="bottom-left"><span class="weather-icon">☁</span><div><b>ASHFALL</b><small>WIND FROM THE WEST · 4°</small></div><span class="bottom-divider"></span><div><b id="fragment-count">0 / 3</b><small>MEMORY FRAGMENTS</small></div></div>
-    <div class="controls-note"><span>WASD</span> MOVE <span class="control-sep">·</span> <span>MOUSE</span> LOOK <span class="control-sep">·</span> <span>SHIFT</span> RUN <span class="control-sep">·</span> <span>E</span> INTERACT <button id="help-button">?</button></div>
+    <div class="controls-note"><span>WASD</span> MOVE <span class="control-sep">·</span> <span>DRAG</span> LOOK <span class="control-sep">·</span> <span>SHIFT</span> RUN <span class="control-sep">·</span> <span>E</span> INTERACT <button id="help-button">?</button></div>
 
     <div class="touch-controls" id="touch-controls">
       <div class="dpad"><button data-move="forward">▲</button><div><button data-move="left">◀</button><button data-move="back">▼</button><button data-move="right">▶</button></div></div>
@@ -111,7 +111,7 @@
     </div>
 
     <div class="modal-screen hidden" id="help-screen">
-      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · Move your mouse to look around · <b>E</b> to interact. On touch screens, use the on-screen controls and drag to look.</p><p>Buildings and parked cars are solid. Follow the neon and enter through lit doorways. Inside you will find terminals, crowded rooms, and people with stories. Get close to a cat and press <b>E</b> to pet it. Birds will scatter if you approach. The <b>−</b> on the field map shrinks it, and <b>M</b> collapses the directive.</p><p>The city is divided into three tiers. Each tier answers a different puzzle: tones in the Low Quarter, promises in the Middle Tier, power routing in the Spire. Solve them in order and the perimeter gate will open.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
+      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · <b>Drag the world</b> to look around · <b>E</b> to interact. On touch screens, drag anywhere in the open world and use the on-screen controls. <b>K</b> mutes the city.</p><p>Buildings, parked cars, market furniture and burning bins are solid. Enter lit doorways to find crowded rooms and people at work. Get close to a cat and press <b>E</b> to pet it. Birds peck and scatter. The <b>−</b> on the field map shrinks it, and <b>M</b> collapses the directive.</p><p>Each tier is sealed by a great gate. Wake its relay, then pull the gate lever beside it to raise the doors. At the perimeter, a final lever wakes only after all three relays are online.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
     </div>
 
     <div class="fade-screen" id="fade-screen"></div>
