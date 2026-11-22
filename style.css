@@ -50,3 +50,47 @@
   .dialogue-foot>span{display:none}
   .dialogue-next{margin-left:auto}
 }
+
+/* Three-tier chapter framing */
+.chapter-chip{display:inline-flex;align-items:center;gap:5px;font:7px var(--mono);letter-spacing:.16em;color:var(--acid);border:1px solid rgba(212,239,106,.28);padding:3px 6px;margin-bottom:6px;background:rgba(212,239,106,.05)}
+.mission-card.collapsed .chapter-chip{font-size:6px;padding:2px 5px;margin-bottom:4px;opacity:.86}
+.chapter-banner{position:absolute;z-index:8;left:50%;top:30%;transform:translate(-50%,14px);display:grid;justify-items:center;gap:5px;padding:16px 30px;text-align:center;background:linear-gradient(180deg,rgba(6,17,19,.94),rgba(6,17,19,.72));border-top:2px solid var(--acid);border-bottom:1px solid rgba(212,239,106,.3);pointer-events:none;opacity:0;transition:opacity .45s ease,transform .45s ease}
+.chapter-banner.show{opacity:1;transform:translate(-50%,0)}
+.chapter-banner small{font:8px var(--mono);letter-spacing:.3em;color:#a9b8af}
+.chapter-banner strong{font-size:27px;letter-spacing:-.04em;color:#f2f6e9}
+.chapter-banner span{font:8px var(--mono);letter-spacing:.12em;color:var(--acid)}
+
+/* Compact collapsible field map, pinned top-right */
+.map-panel{right:36px;top:188px;bottom:auto;width:162px;padding:8px 9px 7px}
+.map-panel canvas{width:140px;height:140px}
+.map-head{align-items:center;gap:6px}
+.map-toggle{width:19px;height:19px;display:grid;place-items:center;border:1px solid rgba(210,231,222,.24);background:rgba(8,20,22,.8);color:var(--acid);font:12px var(--mono);line-height:1;padding:0;cursor:pointer}
+.map-toggle:hover{border-color:var(--acid)}
+.map-panel.collapsed{width:126px}
+.map-panel.collapsed canvas,.map-panel.collapsed .map-legend{display:none}
+.map-panel.collapsed .map-head{padding-bottom:0}
+.map-panel.collapsed .map-head span:first-child:after{content:' // MINIMIZED';color:#7f928b;font-size:6px}
+
+/* Alternate relay puzzle formats */
+.dial-button,.switch-button{flex:1;min-height:74px;background:#122123;border:1px solid #334544;cursor:pointer;color:#dce7dc;display:grid;place-items:center;gap:4px;padding:8px 4px;transition:.2s}
+.dial-button:hover,.switch-button:hover{border-color:var(--acid);background:#1b2926}
+.dial-button b,.switch-button b{font:600 19px var(--mono);letter-spacing:.05em}
+.dial-button span,.switch-button span{font:7px var(--mono);letter-spacing:.1em;color:#9eaaa4;text-align:center}
+.switch-button.on{border-color:var(--acid);background:rgba(212,239,106,.15);box-shadow:inset 0 0 24px rgba(212,239,106,.12)}
+.switch-button.on b{color:var(--acid)}
+.tone-row.circuit{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+@media(max-width:700px){
+  .map-panel{right:14px;top:152px;transform:scale(.82);transform-origin:top right}
+  .chapter-banner{top:26%;padding:12px 20px;width:min(340px,calc(100vw - 30px))}
+  .chapter-banner strong{font-size:21px}
+  .map-panel.collapsed{width:118px}
+}
+
+/* Final pinning: the field map stays compact in the top-right on touch layouts. */
+.mobile #map-panel{top:150px;bottom:auto;right:14px;transform:scale(.8);transform-origin:top right}
+.mobile #map-panel.collapsed{width:126px}
+@media(max-width:700px){
+  .map-panel{top:150px;bottom:auto}
+  .map-panel canvas{width:140px;height:140px}
+}
