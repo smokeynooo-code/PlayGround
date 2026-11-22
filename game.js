@@ -133,6 +133,36 @@ function buildEnterableBuilding(o){
 }
 const archiveHouse=buildEnterableBuilding({x:-27,z:4,w:22,d:16,h:5.4,doorSide:'+x',doorWidth:3.4,sign:{text:'TRANSIT ARCHIVE',color:'#ffb37e',width:6.2},wallMat:new THREE.MeshStandardMaterial({color:'#5d5d52',roughness:.97}),floorMat:new THREE.MeshStandardMaterial({color:'#414843',roughness:.95})});
 const signalHouse=buildEnterableBuilding({x:29,z:3,w:22,d:16,h:5.2,doorSide:'-x',doorWidth:3.4,sign:{text:'THE SIGNAL HOUSE',color:'#9fe4d4',width:6.5},wallMat:new THREE.MeshStandardMaterial({color:'#4c5956',roughness:.97}),floorMat:new THREE.MeshStandardMaterial({color:'#3d4747',roughness:.95})});
+// Named enterable civic and commercial buildings
+const supermarket=buildEnterableBuilding({x:-51,z:27,w:20,d:18,h:5.6,doorSide:'-z',doorWidth:3.6,sign:{text:'MARKET 09',color:'#bfe8a2',width:5.2},wallMat:new THREE.MeshStandardMaterial({color:'#52624f',roughness:.96}),floorMat:new THREE.MeshStandardMaterial({color:'#777768',roughness:.95})});
+const police=buildEnterableBuilding({x:-51,z:52,w:19,d:17,h:6.2,doorSide:'-z',doorWidth:3.2,sign:{text:'CIVIC POLICE',color:'#9dc8d8',width:5.8},wallMat:new THREE.MeshStandardMaterial({color:'#46575a',roughness:.96}),floorMat:new THREE.MeshStandardMaterial({color:'#484f50',roughness:.95})});
+const postOffice=buildEnterableBuilding({x:51,z:27,w:20,d:18,h:5.5,doorSide:'-z',doorWidth:3.4,sign:{text:'POST OFFICE',color:'#e3c77d',width:5.5},wallMat:new THREE.MeshStandardMaterial({color:'#666052',roughness:.96}),floorMat:new THREE.MeshStandardMaterial({color:'#56544a',roughness:.95})});
+const residence=buildEnterableBuilding({x:51,z:52,w:20,d:17,h:5.4,doorSide:'-z',doorWidth:2.8,sign:{text:'HOUSE 18',color:'#ffc08a',width:4.4},wallMat:new THREE.MeshStandardMaterial({color:'#62605a',roughness:.96}),floorMat:new THREE.MeshStandardMaterial({color:'#5a5549',roughness:.95})});
+// Market: aisles, shelves, refrigerators and a cashier counter
+for(let row=-2;row<=2;row++){
+  box(world,-51,.55,27+row*2.2,10,.18,.9,mats.dark,true);
+  box(world,-51,1.05,27+row*2.2,10,.42,.12,row%2?mats.rust:mats.concrete,true);
+  for(let i=-4;i<=4;i+=2)sphere(world,-51+i*.9,1.18,27+row*2.2,.18,i%2?mats.orange:mats.lit);
+}
+for(let i=0;i<4;i++){box(world,-44+i*1.2,1.25,20.4,1.05,2.5,.7,mats.glass,true);box(world,-44+i*1.2,.35,20.4,.75,.55,.55,mats.dark,true)}
+box(world,-57.4,.85,27.5,2.8,1.55,1.15,mats.dark,true);box(world,-57.4,1.7,27.5,2.5,.18,.9,mats.rust,false);cylinder(world,-57.4,1.05,27.5,.18,.22,.35,mats.lit,8);
+interiorLamp(-51,27.5,'#bee99e');
+// Police: desk, records wall, holding bench and lit duty map
+box(world,-51,.75,45.7,5.5,1.5,1.2,mats.dark,true);box(world,-51,1.55,45.7,5.1,.16,.9,mats.rust,false);
+for(let i=0;i<5;i++)box(world,-55+i*2,1.1,54.2,1.35,.18,.5,i%2?mats.concrete:mats.rust,true);
+box(world,-45.8,2.1,52.5,2.8,.12,2.2,mats.neon,false);box(world,-45.8,1.15,52.5,.65,2.1,.65,mats.dark,true);
+interiorLamp(-51,52,'#9ac9db');
+// Post office: sorting cages, counters and mail parcels
+for(let i=0;i<4;i++){box(world,45+i*3.2,.95,20.8,2.7,1.9,.8,mats.rust,true);for(let j=0;j<3;j++)box(world,45+i*3.2,.75+j*.55,21.25,2.2,.3,.08,mats.dark,false)}
+box(world,51,.85,30.5,8.2,1.35,1.1,mats.dark,true);box(world,51,1.58,30.5,7.8,.18,.85,mats.rust,false);
+for(let i=0;i<6;i++)box(world,48+i*1.2,1.2,33.8,.8,.9,.65,i%2?mats.concrete:mats.rust,true);
+interiorLamp(51,27.5,'#e2c77a');
+// House: bed, table, chairs, cabinet and kitchen
+box(world,51,.38,45.6,4.2,.55,2.4,mats.concrete,true);box(world,51,.92,45.6,4.1,.35,2.3,mats.lit,false);
+box(world,45.5,.72,52.5,3.4,.18,1.8,mats.rust,true);for(const x of [44,47]){box(world,x,.4,51.1,.22,.8,.22,mats.dark,true);box(world,x,.4,53.9,.22,.8,.22,mats.dark,true)}
+box(world,57,1.1,52.8,1.2,2.2,.8,mats.rust,true);box(world,57,2.05,52.8,.85,.18,.75,mats.dark,false);
+box(world,57,1.05,57.4,1.8,2.1,.8,mats.glass,true);box(world,57,.38,57.4,1.5,.55,.7,mats.concrete,true);
+interiorLamp(51,52,'#ffc07f');
 // Warm interior dressing
 for(const p of [[-33,-2],[-21,-2],[-32,9],[-22,9]])box(world,p[0],.6,p[1],1.25,1.1,.62,mats.rust,true);
 for(let i=0;i<5;i++){box(world,-35.4,.55+i*.33,-2.8,2.1,.16,.45,mats.dark,false);box(world,-35.2,.75+i*.33,-2.8,1.2,.12,.3,i%2?mats.lit:mats.concrete,false)}
@@ -175,6 +205,24 @@ makeNpc({id:'npc-sable',name:'SABLE',x:-13,z:25.2,role:'DISPLACED',cloth:'#665f5
 makeNpc({id:'npc-ren',name:'REN',x:15.6,z:-19.8,role:'INJURED',cloth:'#5d5a52',accent:'#ff906c',pose:'slumped',lines:['A patrol drone clipped me at the crossing. I crawled into the gutter and played dead.','Listen. The relays are old emergency channels. Tune them and the wall forgets to be a wall.','Take my bandage if you need it. I’m not using it anymore.']});
 makeNpc({id:'npc-noma',name:'NOMA',x:7.4,z:-56.4,role:'NEARLY GONE',cloth:'#4b514b',accent:'#ff906c',pose:'lying',lines:['I can see the green from here. Just a sliver over the wall.','I waited too long. The gate only opens for people with somewhere left to go.','Go. Tell the river I remember it.']});
 makeNpc({id:'npc-kesh',name:'KESH',x:6.5,z:42.5,role:'SCAVENGER',cloth:'#6d6a52',accent:'#e7c479',lines:['Trade? I’ve got a bent spoon, two buttons, and a story you probably won’t believe.','The sign over the noodle place flickers at midnight. Some say it’s the old city dreaming.','Keep your eyes on the doorways. That’s where the city hides its people.']});
+makeNpc({id:'npc-ori',name:'ORI',x:-44,z:31,role:'MARKET CLERK',cloth:'#5a7160',accent:'#bfe8a2',lines:['The shelves are never full anymore. We write shortages down and call them forecasts.','There is clean water behind the glass. Not much, but enough for one person.','The police still pretend ration stamps mean anything.']});
+makeNpc({id:'npc-voss',name:'VOSS',x:-47,z:55,role:'DISGRACED OFFICER',cloth:'#4b5c62',accent:'#9dc8d8',lines:['I wore the badge until it started feeling heavier than the gun.','The files in back are copied by hand. Commands arrive, but no one gives them anymore.','You have the look of someone planning to leave. I envy the plan.']});
+makeNpc({id:'npc-iya',name:'IYA',x:47,z:31,role:'POST RUNNER',cloth:'#74684f',accent:'#e3c77d',lines:['Letters are the last objects that move without permission.','That is, unless the sorting room catches them. Then they join the inventory.','If you pass a green postbox, leave a mark. Someone will understand.']});
+makeNpc({id:'npc-joan',name:'JOAN',x:55,z:56,role:'RESIDENT',cloth:'#78634f',accent:'#ffc08a',lines:['This room was warm once. I remember because the bed frame stopped creaking.','Don’t take the street after dark. The patrols sleep, but the machines don’t.','You should keep going while the sky is still undecided.']});
+makeNpc({id:'npc-tamsin',name:'TAMSIN',x:-8,z:-36,role:'REGULAR CITIZEN',cloth:'#65715f',accent:'#d4ef6a',lines:['Half the block left. The rest of us learned to use fewer words.','The relays are not for machines. They are for us—to prove we can still agree on an answer.','There used to be a café there. Still tastes like bitter coffee when I close my eyes.']});
+// Roaming animals: cats, dogs and crows
+const animals=[];
+function makeAnimal(kind,x,z){
+  const g=new THREE.Group();g.position.set(x,0,z);world.add(g);
+  const mat=npcMat(kind==='crow'?'#171f20':kind==='dog'?'#706351':'#4f5450');
+  if(kind==='crow'){sphere(g,0,.95,0,.28,mat);box(g,0,.62,.12,.12,.32,.12,mat,true);box(g,-.32,.9,.03,.7,.08,.28,mat,true);box(g,.32,.9,.03,.7,.08,.28,mat,true);box(g,0,.72,-.3,.12,.12,.42,mat,true)}
+  else if(kind==='dog'){box(g,0,.48,0,.82,.48,.42,mat,true);sphere(g,.5,.63,.05,.28,mat);box(g,.52,.43,.55,.12,.38,.12,mat,true);for(const lx of [-.27,.27])box(g,lx,.18,0,.12,.42,.12,mat,true)}
+  else {sphere(g,0,.38,0,.32,mat);box(g,-.1,.72,.02,.12,.2,.12,mat,true);box(g,.1,.72,.02,.12,.2,.12,mat,true);box(g,.2,.35,.25,.08,.32,.08,mat,true);box(g,-.2,.35,.25,.08,.32,.08,mat,true)}
+  const a={kind,group:g,x,z,baseX:x,baseZ:z,phase:rand()*6,speed:.18+rand()*.22,turn:rand()>0.5?1:-1};animals.push(a);return a;
+}
+makeAnimal('cat',-18,18);makeAnimal('cat',42,-18);makeAnimal('cat',-39,58);
+makeAnimal('dog',18,19);makeAnimal('dog',-48,-38);
+makeAnimal('crow',-12,-20);makeAnimal('crow',44,18);makeAnimal('crow',5,50);
 // Memory fragments as optional pieces of the world's lost story
 const memories=[[-43,-7],[-13,48],[41,-41]].map((p,i)=>{const g=new THREE.Group();g.position.set(p[0],.85,p[1]);world.add(g);const core=new THREE.Mesh(new THREE.OctahedronGeometry(.42,0),mats.lit);core.castShadow=true;g.add(core);const halo=new THREE.Mesh(new THREE.TorusGeometry(.7,.025,5,30),mats.neon);halo.rotation.x=Math.PI/2;g.add(halo);return {group:g,got:false,index:i}});
 // Add planted grass / small shrubs, clustered in courtyards
@@ -227,7 +275,9 @@ function collectMemories(){for(const m of memories){if(m.got)continue;if(player.
 const PLAYER_RADIUS=.42;function collidesAt(x,z,r=PLAYER_RADIUS){for(const c of colliders)if(x+r>c.x1&&x-r<c.x2&&z+r>c.z1&&z-r<c.z2)return true;return false}
 function movePlayer(dt){const forward=(keys.KeyW||keys.ArrowUp||touchKeys.KeyW?1:0)-(keys.KeyS||keys.ArrowDown||touchKeys.KeyS?1:0);const strafe=(keys.KeyD||keys.ArrowRight||touchKeys.KeyD?1:0)-(keys.KeyA||keys.ArrowLeft||touchKeys.KeyA?1:0);run=!!(keys.ShiftLeft||keys.ShiftRight||touchKeys.ShiftLeft);let dx=0,dz=0;if(forward||strafe){const len=Math.hypot(forward,strafe);const f=forward/len,s=strafe/len;dx=(-Math.sin(yaw)*f+Math.cos(yaw)*s);dz=(-Math.cos(yaw)*f-Math.sin(yaw)*s);const speed=run?8.2:4.7;const step=speed*dt;const nx=THREE.MathUtils.clamp(player.position.x+dx*step,-64,64),nz=THREE.MathUtils.clamp(player.position.z+dz*step,-68,64);if(!collidesAt(nx,player.position.z))player.position.x=nx;if(!collidesAt(player.position.x,nz))player.position.z=nz;avatar.rotation.y=Math.atan2(dx,dz);const swing=Math.sin(performance.now()*.012*(run?1.5:1));legL.rotation.x=swing*.42;legR.rotation.x=-swing*.42;avatar.position.y=Math.abs(swing)*.035}else{legL.rotation.x*=.8;legR.rotation.x*=.8;avatar.position.y=0}}
 function updateCamera(dt){const distance=7.8;const target=new THREE.Vector3(player.position.x,player.position.y+1.45,player.position.z);const horizontal=distance*Math.cos(pitch);const desired=new THREE.Vector3(target.x+Math.sin(yaw)*horizontal,target.y+2.2+Math.sin(pitch)*distance,target.z+Math.cos(yaw)*horizontal);let safe=1;for(let i=1;i<=18;i++){const f=i/18,cx=target.x+(desired.x-target.x)*f,cz=target.z+(desired.z-target.z)*f;if(collidesAt(cx,cz,.24)){safe=Math.max(.14,(i-1)/18);break}}const clipped=target.clone().lerp(desired,safe);camera.position.lerp(clipped,1-Math.exp(-dt*5));camera.lookAt(target.x,target.y+1,target.z);}
-function updateWorld(dt,t){for(const e of entities){if(e.type==='relay'&&!e.active){for(const child of e.group.children)if(child.userData.orb){child.position.y=2+Math.sin(t*2+child.position.x*5)*.11}}}for(const m of memories){m.group.rotation.y+=dt*.7;m.group.position.y=.85+Math.sin(t*2+m.index)*.12}for(const tree of paradise.children)if(tree.geometry?.type==='SphereGeometry')tree.rotation.z=Math.sin(t*.3+tree.position.x)*.006;for(const s of neonSigns){const flick=.82+Math.sin(t*2.1+s.phase)*.07+Math.sin(t*11.7+s.phase*2)*.035;s.mesh.material.opacity=THREE.MathUtils.clamp(flick,.56,1)}for(const f of fires){const p=.9+Math.sin(t*12+f.phase)*.11+Math.sin(t*23+f.phase*2)*.06;f.light.intensity=9*p;f.flame.scale.y=.52+Math.sin(t*15+f.phase)*.08}for(const label of labels){if(!label.visible)continue;label.getWorldPosition(labelPos);const d=camera.position.distanceTo(labelPos),w=label.userData.labelType==='npc'?THREE.MathUtils.clamp(d*.095,.35,2.4):THREE.MathUtils.clamp(d*.17,.6,4.4);label.scale.set(w,w*.25,1)}}
+function updateWorld(dt,t){for(const e of entities){if(e.type==='relay'&&!e.active){for(const child of e.group.children)if(child.userData.orb){child.position.y=2+Math.sin(t*2+child.position.x*5)*.11}}}
+for(const a of animals){const w=a.phase+t*a.speed;const radius=a.kind==='crow'?3.8:2.6;a.group.position.x=a.baseX+Math.sin(w)*radius*a.turn;a.group.position.z=a.baseZ+Math.cos(w*.78)*radius*.55;a.group.rotation.y=-w*a.turn+a.turn*.2;if(a.kind==='crow'){a.group.position.y=.12+Math.abs(Math.sin(w*2))*(.3);for(const child of a.group.children)child.rotation.z=Math.sin(w*3)*.08}}
+for(const m of memories){m.group.rotation.y+=dt*.7;m.group.position.y=.85+Math.sin(t*2+m.index)*.12}for(const tree of paradise.children)if(tree.geometry?.type==='SphereGeometry')tree.rotation.z=Math.sin(t*.3+tree.position.x)*.006;for(const s of neonSigns){const flick=.82+Math.sin(t*2.1+s.phase)*.07+Math.sin(t*11.7+s.phase*2)*.035;s.mesh.material.opacity=THREE.MathUtils.clamp(flick,.56,1)}for(const f of fires){const p=.9+Math.sin(t*12+f.phase)*.11+Math.sin(t*23+f.phase*2)*.06;f.light.intensity=9*p;f.flame.scale.y=.52+Math.sin(t*15+f.phase)*.08}for(const label of labels){if(!label.visible)continue;label.getWorldPosition(labelPos);const d=camera.position.distanceTo(labelPos),w=label.userData.labelType==='npc'?THREE.MathUtils.clamp(d*.095,.35,2.4):THREE.MathUtils.clamp(d*.17,.6,4.4);label.scale.set(w,w*.25,1)}}
 let elapsed=0;function frame(){requestAnimationFrame(frame);const dt=Math.min(clock.getDelta(),.04);elapsed+=dt;if(isStarted&&(!$('#puzzle-screen').classList.contains('hidden')||dialogueOpen)){}else if(isStarted){movePlayer(dt);checkInteraction();collectMemories();setLocation();updateObjectiveDistance()}updateCamera(dt);updateWorld(dt,elapsed);drawMap();$('#clock').textContent=`${String(6+Math.floor(elapsed/60)).padStart(2,'0')}:${String(Math.floor(elapsed%60)).padStart(2,'0')}`;const heading=((Math.round(((yaw*180/Math.PI)%360)+360)%360)+360)%360;$('#compass b').textContent=`${String(heading).padStart(3,'0')}°`;renderer.render(scene,camera)}
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.8));if(isMobile())document.body.classList.add('mobile')};window.addEventListener('resize',resize);
 // Initial map and cinematic framing
