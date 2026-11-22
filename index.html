@@ -26,9 +26,10 @@
       <div class="mission-head">
         <div class="mission-direction" aria-hidden="true"><span id="mission-arrow">↑</span></div>
         <div class="mission-main">
-          <div class="eyebrow"><span class="eyebrow-line"></span> ACTIVE DIRECTIVE <span id="step-count">01 / 06</span></div>
+          <div class="chapter-chip" id="chapter-label">CHAPTER 01 · THE LOW QUARTER</div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> ACTIVE DIRECTIVE <span id="step-count">01 / 08</span></div>
           <h1 id="mission-title">Find the Archive</h1>
-          <p id="mission-desc" class="mission-desc">The old transit archive sits beneath the eastern overpass. Find a way inside.</p>
+          <p id="mission-desc" class="mission-desc">The old transit archive sits at the north edge of the Low Quarter. Its east door is lit.</p>
           <div class="objective-row"><span class="objective-icon">⌖</span><span id="objective-text">Reach the Archive entrance</span><span class="objective-distance" id="objective-distance">—</span></div>
           <div class="progress-track"><span id="mission-progress"></span></div>
         </div>
@@ -42,6 +43,7 @@
     <div class="interact-hint" id="interact-hint"><span class="keycap">E</span><span>INTERACT</span></div>
 
     <div class="toast" id="toast"><span class="toast-icon">✳</span><span id="toast-text">Signal acquired</span></div>
+    <div class="chapter-banner" id="chapter-banner"><small>CHAPTER 02</small><strong>THE MIDDLE TIER</strong><span>Comfort is a controlled substance.</span></div>
     <div class="subtitle" id="subtitle"></div>
 
     <div class="dialogue-screen hidden" id="dialogue-screen" role="dialog" aria-live="polite">
@@ -55,8 +57,8 @@
     </div>
 
     <div class="map-panel" id="map-panel">
-      <div class="map-head"><span>FIELD MAP</span><span>SECTOR 09</span></div>
-      <canvas id="minimap" width="180" height="180"></canvas>
+      <div class="map-head"><span>FIELD MAP</span><button class="map-toggle" id="map-toggle" aria-label="Minimize map" aria-expanded="true" title="Minimize map">−</button></div>
+      <canvas id="minimap" width="140" height="140"></canvas>
       <div class="map-legend"><i class="legend-player"></i> YOU <i class="legend-goal"></i> OBJECTIVE</div>
     </div>
 
@@ -109,7 +111,7 @@
     </div>
 
     <div class="modal-screen hidden" id="help-screen">
-      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · Move your mouse to look around · <b>E</b> to interact. On touch screens, use the on-screen controls and drag to look.</p><p>Buildings are solid. Follow the neon and enter through lit doorways—interiors hold terminals and people with stories. The small <b>＋</b> on the directive (or <b>M</b>) collapses it when you need more sky. Press <b>ESC</b> to release the mouse and use the interface.</p><p>Follow the arrow in the mission card. Find clues in the world, solve the terminals, and bring the relay network back online. Your map marks the next destination.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
+      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · Move your mouse to look around · <b>E</b> to interact. On touch screens, use the on-screen controls and drag to look.</p><p>Buildings and parked cars are solid. Follow the neon and enter through lit doorways. Inside you will find terminals, crowded rooms, and people with stories. Get close to a cat and press <b>E</b> to pet it. Birds will scatter if you approach. The <b>−</b> on the field map shrinks it, and <b>M</b> collapses the directive.</p><p>The city is divided into three tiers. Each tier answers a different puzzle: tones in the Low Quarter, promises in the Middle Tier, power routing in the Spire. Solve them in order and the perimeter gate will open.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
     </div>
 
     <div class="fade-screen" id="fade-screen"></div>
