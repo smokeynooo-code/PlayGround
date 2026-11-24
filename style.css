@@ -37,6 +37,22 @@
 .dialogue-next b{font-size:15px;font-weight:400}
 .dialogue-next:hover{background:#e8ff83}
 
+/* In-world speech bubble: anchored above the speaker, with a paper tail. */
+.dialogue-card.bubble{left:var(--bubble-x,50%);top:var(--bubble-y,62%);bottom:auto;transform:translate(-50%,-100%);width:min(440px,calc(100vw - 38px));padding:18px 21px 15px;border-radius:22px 22px 22px 7px;border:1px solid rgba(30,45,39,.34);border-top:3px solid #b5d84f;background:linear-gradient(145deg,rgba(249,249,237,.98),rgba(218,226,211,.96));box-shadow:0 22px 60px rgba(0,0,0,.58),0 0 0 5px rgba(6,17,19,.12);backdrop-filter:blur(12px);color:#17251f;transition:left .16s ease,top .16s ease}
+.dialogue-card.bubble:before{background:linear-gradient(105deg,rgba(255,255,255,.32),transparent 55%);border-radius:inherit}
+.dialogue-card.bubble:after{content:'';position:absolute;left:34px;bottom:-15px;width:28px;height:28px;background:#dce4d5;border-right:1px solid rgba(30,45,39,.3);border-bottom:1px solid rgba(30,45,39,.3);border-radius:0 0 7px 0;transform:rotate(45deg);box-shadow:9px 9px 18px rgba(0,0,0,.18)}
+.dialogue-card.bubble.offscreen{left:50%;top:auto;bottom:20%;transform:translateX(-50%)}
+.dialogue-card.bubble .dialogue-close{right:10px;top:9px;border-color:rgba(22,40,32,.2);color:#4d6157}
+.dialogue-card.bubble .dialogue-close:hover{border-color:#5f7b2b;color:#1b2a22}
+.dialogue-card.bubble .dialogue-meta{color:#62766b}
+.dialogue-card.bubble .dialogue-meta span:first-child{color:#5f7c1e}
+.dialogue-card.bubble h3{font-size:23px;letter-spacing:-.045em;margin:6px 0 7px;color:#14221c}
+.dialogue-card.bubble p{min-height:auto;margin:0 0 12px;max-width:none;color:#2d4338;font-size:13px;line-height:1.6}
+.dialogue-card.bubble .dialogue-foot{border-top-color:rgba(22,40,32,.15);padding-top:10px}
+.dialogue-card.bubble .dialogue-foot>span{color:#687b6e}
+.dialogue-card.bubble .dialogue-next{background:#26382e;color:#e9f0db;padding:8px 11px}
+.dialogue-card.bubble .dialogue-next:hover{background:#17271f}
+
 .puzzle-card,.help-card,.ending-card{max-height:calc(100vh - 30px);overflow:auto}
 @media(max-width:700px){
   .compass{display:none}
@@ -47,6 +63,10 @@
   .dialogue-card{width:calc(100vw - 26px);bottom:24%;padding:18px 18px 16px}
   .dialogue-card h3{font-size:23px}
   .dialogue-card p{font-size:12px;min-height:68px}
+  .dialogue-card.bubble{width:calc(100vw - 24px);padding:16px 16px 13px;border-radius:20px 20px 20px 7px}
+  .dialogue-card.bubble h3{font-size:20px;margin:4px 0 5px}
+  .dialogue-card.bubble p{font-size:12px;line-height:1.52;min-height:0}
+  .dialogue-card.bubble:after{left:28px;bottom:-13px;width:24px;height:24px}
   .dialogue-foot>span{display:none}
   .dialogue-next{margin-left:auto}
 }
