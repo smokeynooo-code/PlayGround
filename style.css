@@ -133,3 +133,74 @@
   .bottom-left{bottom:14px}
   .interact-hint{bottom:26%}
 }
+
+/* Ensure panel switching wins over the layout display rules above. */
+.hidden{display:none!important}
+
+/* Field-system menu and save archive */
+.menu-toggle{width:27px;height:24px;display:grid;place-items:center;border:1px solid rgba(212,239,106,.34);background:rgba(10,24,25,.74);color:var(--acid);font:13px var(--mono);line-height:1;padding:0;cursor:pointer;transition:border-color .2s,background .2s}
+.menu-toggle:hover{border-color:var(--acid);background:rgba(28,46,39,.92)}
+.menu-card{position:relative;width:min(610px,calc(100vw - 36px));max-height:calc(100vh - 32px);overflow:auto;padding:32px 34px 22px;background:radial-gradient(ellipse at 85% 0%,rgba(63,87,62,.2),transparent 52%),linear-gradient(145deg,#0b181a,#081315);border:1px solid rgba(212,239,106,.26);box-shadow:0 38px 120px #000c,inset 0 0 60px rgba(212,239,106,.025)}
+.menu-card:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(212,239,106,.035),transparent 38%)}
+.menu-card h2{position:relative;font-size:38px;line-height:1;letter-spacing:-.07em;margin:18px 0 7px}
+.menu-sub{position:relative;margin:0;color:#9eada6;font-size:12px;line-height:1.55;max-width:430px}
+.menu-actions{position:relative;display:grid;gap:8px;margin:24px 0 8px}
+.menu-action{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:14px;width:100%;padding:14px 15px;text-align:left;background:rgba(18,35,35,.72);border:1px solid rgba(210,231,222,.16);color:#e8eee1;cursor:pointer;transition:border-color .18s,background .18s,transform .18s}
+.menu-action:hover{border-color:rgba(212,239,106,.62);background:rgba(29,48,42,.9);transform:translateX(3px)}
+.menu-action-icon{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(212,239,106,.36);background:rgba(212,239,106,.07);color:var(--acid);font:17px var(--mono)}
+.menu-action b{display:block;font:600 13px var(--mono);letter-spacing:.12em;color:#edf3e4}
+.menu-action small{display:block;margin-top:4px;font:9px var(--mono);letter-spacing:.03em;color:#8fa09a}
+.menu-action i{font:22px var(--sans);font-style:normal;color:var(--acid)}
+.menu-panel{position:relative;margin-top:20px}
+.menu-panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(210,231,222,.14);padding-bottom:11px;margin-bottom:13px}
+.menu-panel-head small{font:7px var(--mono);letter-spacing:.18em;color:#8fa19a}
+.menu-panel-head h3{font-size:21px;letter-spacing:-.05em;margin:5px 0 0;color:#eef4e7}
+.menu-back{border:1px solid rgba(210,231,222,.2);background:rgba(11,26,27,.75);color:#b8c5be;font:8px var(--mono);letter-spacing:.09em;padding:7px 9px;cursor:pointer}
+.menu-back:hover{border-color:var(--acid);color:var(--acid)}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(210,231,222,.09)}
+.setting-row:last-of-type{border-bottom:0}
+.setting-row>span{display:grid;gap:4px}
+.setting-row b{font:600 10px var(--mono);letter-spacing:.1em;color:#e1e9df}
+.setting-row small{font:9px var(--mono);color:#81938c}
+.setting-toggle{min-width:54px;height:29px;border:1px solid rgba(212,239,106,.48);background:rgba(212,239,106,.12);color:var(--acid);font:600 9px var(--mono);letter-spacing:.1em;cursor:pointer;padding:0 8px}
+.setting-toggle.off{border-color:rgba(210,231,222,.2);background:rgba(10,22,23,.7);color:#7e908a}
+.setting-range{flex:1;max-width:170px;accent-color:var(--acid);height:18px;cursor:pointer}
+.setting-row output{min-width:38px;text-align:right;font:9px var(--mono);color:var(--acid)}
+.menu-note{margin:14px 0 0;font:9px var(--mono);line-height:1.6;color:#7f918a;letter-spacing:.02em}
+.autosave-row{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:11px;padding:12px 12px;border:1px solid rgba(212,239,106,.28);background:linear-gradient(100deg,rgba(212,239,106,.09),rgba(14,28,28,.55));margin-bottom:9px}
+.autosave-mark{font:700 8px var(--mono);letter-spacing:.11em;color:#111c15;background:var(--acid);padding:5px 0;text-align:center}
+.autosave-copy b{display:block;font:600 10px var(--mono);letter-spacing:.12em;color:#edf4e1}
+.autosave-copy small{display:block;margin-top:4px;font:8px var(--mono);color:#93a39b}
+.autosave-actions{display:flex;gap:6px;align-items:center}
+.save-slots{display:grid;gap:7px}
+.save-slot{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:11px;padding:11px 12px;border:1px solid rgba(210,231,222,.14);background:rgba(9,22,23,.58)}
+.save-slot.empty{opacity:.76;border-style:dashed}
+.slot-index{font:600 15px var(--mono);letter-spacing:.05em;color:#8ea29a;border-right:1px solid rgba(210,231,222,.15);padding-right:9px}
+.save-slot.filled .slot-index{color:var(--acid)}
+.slot-copy b{display:block;font:600 9px var(--mono);letter-spacing:.08em;color:#e4ebdf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
+.slot-copy small{display:block;margin-top:4px;font:8px var(--mono);line-height:1.4;color:#84968e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
+.slot-actions{display:flex;gap:5px;align-items:center}
+.slot-action{min-width:48px;height:27px;padding:0 7px;border:1px solid rgba(212,239,106,.3);background:rgba(212,239,106,.06);color:var(--acid);font:600 8px var(--mono);letter-spacing:.08em;cursor:pointer}
+.slot-action:hover:not(:disabled){border-color:var(--acid);background:rgba(212,239,106,.15)}
+.slot-action:disabled{opacity:.28;cursor:not-allowed}
+.slot-action.danger{border-color:rgba(255,144,108,.32);color:#ffb196;background:rgba(255,144,108,.05)}
+.slot-action.danger:hover:not(:disabled){border-color:var(--orange);background:rgba(255,144,108,.14)}
+.menu-foot{position:relative;display:flex;justify-content:space-between;gap:18px;margin-top:20px;padding-top:13px;border-top:1px solid rgba(210,231,222,.12);font:8px var(--mono);letter-spacing:.1em;color:#788c84}
+.menu-foot span:last-child{color:var(--acid)}
+@media(max-width:700px){
+  .menu-card{width:calc(100vw - 24px);padding:25px 20px 18px}
+  .menu-card h2{font-size:31px}
+  .menu-action{grid-template-columns:34px 1fr auto;gap:10px;padding:12px}
+  .menu-action-icon{width:31px;height:31px;font-size:14px}
+  .menu-action b{font-size:11px}
+  .menu-action small{font-size:8px}
+  .setting-row{gap:10px}
+  .setting-row small{max-width:145px;line-height:1.45}
+  .setting-range{max-width:110px}
+  .save-slot{grid-template-columns:34px 1fr;gap:8px}
+  .slot-actions{grid-column:1/-1;justify-content:flex-end}
+  .slot-copy b,.slot-copy small{max-width:180px}
+  .autosave-row{grid-template-columns:38px 1fr;gap:8px}
+  .autosave-actions{grid-column:1/-1;justify-content:flex-end}
+  .menu-toggle{width:24px;height:22px;font-size:12px}
+}
