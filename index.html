@@ -19,7 +19,7 @@
 
     <header class="topbar">
       <div class="brand"><span class="brand-mark">O</span><span>OUTSIDE</span><i>FIELD SYSTEMS / 09</i></div>
-      <div class="top-status"><span class="live-dot"></span> CIVIC GRID <b>OFFLINE</b><span class="divider"></span><span id="clock">06:14</span><button class="audio-toggle" id="audio-toggle" aria-pressed="true" title="Toggle city sound (K)">SOUND ON</button></div>
+      <div class="top-status"><span class="live-dot"></span> CIVIC GRID <b>OFFLINE</b><span class="divider"></span><span id="clock">06:14</span><button class="audio-toggle" id="audio-toggle" aria-pressed="true" title="Toggle city sound (K)">SOUND ON</button><button class="menu-toggle" id="menu-button" aria-label="Open game menu" title="Open menu (Esc)">☰</button></div>
     </header>
 
     <section class="mission-card collapsed" id="mission-card" aria-live="polite">
@@ -111,7 +111,71 @@
     </div>
 
     <div class="modal-screen hidden" id="help-screen">
-      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · <b>Drag the world</b> to look around · <b>E</b> to interact. On touch screens, drag anywhere in the open world and use the on-screen controls. <b>K</b> mutes the city.</p><p>Buildings, parked cars, market furniture and burning bins are solid. Enter lit doorways to find crowded rooms and people at work. Get close to a cat and press <b>E</b> to pet it. Birds peck and scatter. The <b>−</b> on the field map shrinks it, and <b>M</b> collapses the directive.</p><p>Each tier is sealed by a great gate. Wake its relay, then pull the gate lever beside it to raise the doors. At the perimeter, a final lever wakes only after all three relays are online.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
+      <div class="help-card"><button class="close-modal" id="help-close">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD NOTES</div><h2>HOW TO MOVE</h2><p><b>W A S D</b> to walk · <b>SHIFT</b> to run · <b>Drag the world</b> to look around · <b>E</b> to interact. On touch screens, drag anywhere in the open world and use the on-screen controls. <b>K</b> mutes the city.</p><p>Buildings, parked cars, market furniture and burning bins are solid. Enter lit doorways to find crowded rooms and people at work. Get close to a cat and press <b>E</b> to pet it. Birds peck and scatter. The <b>−</b> on the field map shrinks it, and <b>M</b> collapses the directive.</p><p>Each tier is sealed by a great gate. Wake its relay, then pull the gate lever beside it to raise the doors. At the perimeter, a final lever wakes only after all three relays are online.</p><p>Press <b>ESC</b> or the <b>☰</b> button for Continue, Settings and three independent save slots. Autosave writes a field record every five minutes.</p><button class="primary-button" id="resume-button"><span>BACK TO THE CITY</span><b>↗</b></button></div>
+    </div>
+
+    <div class="modal-screen hidden" id="menu-screen">
+      <div class="menu-card" role="dialog" aria-modal="true" aria-labelledby="menu-title">
+        <button class="close-modal" id="menu-close" aria-label="Close menu">×</button>
+        <div class="eyebrow"><span class="eyebrow-line"></span> FIELD SYSTEM / PAUSED</div>
+        <h2 id="menu-title">MENU</h2>
+        <p class="menu-sub" id="menu-sub">The city waits. Resume, tune the field system, or hold your progress in a slot.</p>
+
+        <div class="menu-actions" id="menu-actions">
+          <button class="menu-action" id="menu-continue">
+            <span class="menu-action-icon">▶</span>
+            <span><b>CONTINUE</b><small>Return to the city</small></span>
+            <i>↗</i>
+          </button>
+          <button class="menu-action" id="menu-settings">
+            <span class="menu-action-icon">⚙</span>
+            <span><b>SETTINGS</b><small>Sound, look sensitivity and autosave</small></span>
+            <i>›</i>
+          </button>
+          <button class="menu-action" id="menu-save">
+            <span class="menu-action-icon">▣</span>
+            <span><b>SAVE</b><small>Three independent field slots</small></span>
+            <i>›</i>
+          </button>
+        </div>
+
+        <section class="menu-panel hidden" id="menu-settings-panel" aria-labelledby="settings-title">
+          <div class="menu-panel-head">
+            <div><small>SYSTEM CONFIG</small><h3 id="settings-title">SETTINGS</h3></div>
+            <button class="menu-back" data-menu-back>← BACK</button>
+          </div>
+          <div class="setting-row">
+            <span><b>CITY AUDIO</b><small>Soundscape, music and effects</small></span>
+            <button class="setting-toggle" id="setting-audio" aria-pressed="true">ON</button>
+          </div>
+          <label class="setting-row" for="setting-sensitivity">
+            <span><b>LOOK SENSITIVITY</b><small>Mouse and drag-to-look speed</small></span>
+            <input class="setting-range" id="setting-sensitivity" type="range" min="50" max="160" step="5" value="100">
+            <output id="setting-sensitivity-value" for="setting-sensitivity">100%</output>
+          </label>
+          <div class="setting-row">
+            <span><b>AUTOSAVE</b><small>Write a field record every five minutes</small></span>
+            <button class="setting-toggle" id="setting-autosave" aria-pressed="true">ON</button>
+          </div>
+          <p class="menu-note">Settings are stored on this device. Save slots are independent and can be reset at any time.</p>
+        </section>
+
+        <section class="menu-panel hidden" id="menu-save-panel" aria-labelledby="save-title">
+          <div class="menu-panel-head">
+            <div><small>FIELD ARCHIVE</small><h3 id="save-title">SAVE SLOTS</h3></div>
+            <button class="menu-back" data-menu-back>← BACK</button>
+          </div>
+          <div class="autosave-row" id="autosave-row">
+            <div class="autosave-mark">AUTO</div>
+            <div class="autosave-copy"><b>AUTOSAVE</b><small id="autosave-detail">Every 05:00 while playing</small></div>
+            <div class="autosave-actions"><button class="slot-action" id="autosave-load" disabled>LOAD</button><button class="setting-toggle" id="autosave-toggle" aria-pressed="true">ON</button></div>
+          </div>
+          <div class="save-slots" id="save-slots"></div>
+          <p class="menu-note" id="save-note">Each slot carries its own position, mission state, memories and gates. Deleting a slot clears only that record.</p>
+        </section>
+
+        <div class="menu-foot"><span>ESC TO RESUME</span><span id="menu-autosave-state">AUTOSAVE ON</span></div>
+      </div>
     </div>
 
     <div class="fade-screen" id="fade-screen"></div>
